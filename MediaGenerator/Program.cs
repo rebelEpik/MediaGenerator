@@ -21,7 +21,16 @@ namespace MediaGenerator
             }
             Console.WriteLine("Output Path...");
             var output = Console.ReadLine();
-
+            if (!Directory.Exists(output))
+            {
+                try
+                {
+                    Directory.CreateDirectory(output);
+                } catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
 
 
             Console.WriteLine("Now generating list");
@@ -59,7 +68,10 @@ namespace MediaGenerator
 
 
             }
-
+            if (!output.EndsWith(@"\"))
+            {
+                output += @"\";
+            }
             CreateFiles(output);
 
             GenerateOutput(movieList, output);
@@ -90,6 +102,7 @@ namespace MediaGenerator
 
         public static void CreateFiles(string output)
         {
+
             string js = AppDomain.CurrentDomain.BaseDirectory + @"HTML\script.js";
             string css = AppDomain.CurrentDomain.BaseDirectory + @"HTML\MovieList.css";
 
